@@ -1,6 +1,6 @@
 # Capstone Proposal
 
-## Title: ? ~ Mo'Mountains, Mountains'R's, HuMons (Human / 'Mons' Latin for mountain)
+## Title: ? ~ Mo'Mountains, Mountains'R'Us (Cheesy), HuMons (Human / 'Mons' Latin for mountain)
 
 ## Overview
 Provide a space where mountaineers and climbers can organize and plan expeditions. Goal of this project is to present users with capabilities to schedule and apply to posted expeditions.
