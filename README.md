@@ -17,11 +17,11 @@ Provide a tool where mountaineers can organize and plan expeditions. Goal of thi
 
 * I can drop-out from climb that I have been accepted or waitlisted.
 
-### As Climb Leader :
+### As a Climb Leader :
 
 * I can set-up and edit a user account/profile.
 
-* I can add, update or delete a posted climb in the calender.
+* I can add, update or delete a posted climb in the calendar.
 
 * I can see who has applied to my posted climbs and view the applicant's profile.
 
@@ -60,7 +60,7 @@ Provide a tool where mountaineers can organize and plan expeditions. Goal of thi
 
 ### Week 1
 
-* Foster Positivity.
+* Stay Positive & Motivated.
 * Create & Clone Repository.
 * Create Virtual Environment.
 * Start Django, Vue?
@@ -68,17 +68,17 @@ Provide a tool where mountaineers can organize and plan expeditions. Goal of thi
 
 ### Week 2
 
-* Foster Positivity.
+* Stay Positive & Motivated.
 * TBD.
 
 ### Week 3
 
-* Foster Positivity.
+* Stay Positive & Motivated.
 * TBD.
 
 ### Week 4
 
-* Foster Positivity
+* Stay Positive & Motivated.
 * Deploy to Heroku.
 * TBD.
 
