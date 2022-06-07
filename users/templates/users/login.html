@@ -12,14 +12,16 @@
 	<form action="{% url 'users:login' %}" method="POST">
 		{% csrf_token %}
 		
-		<label for="username">Username:</label>
-		<input type="text" id="username" name="username"
+		<div>
+			<label for="username">Username:</label>
+			<input type="text" id="username" name="username">
+		
 		
 		
 		<label for="password">Password:</label>
-		<input type="password" id="password" name="password"
+		<input type="password" id="password" name="password">
 		
-		<input type="submit" value="Log In"
+		<input type="submit" value="Log In">
 	
 		<p>{{ message }}</p>
 	</form>
