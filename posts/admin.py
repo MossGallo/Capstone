@@ -1,5 +1,5 @@
 from django.contrib import admin
 
-from .models import Climb
+from .models import ClimbEvent
 
-admin.site.register(Climb)
+admin.site.register(ClimbEvent)

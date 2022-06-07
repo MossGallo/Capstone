@@ -1,10 +1,12 @@
 from django.db import models
+from django.contrib.auth.models import User
 
-class Climb(models.Model):
-    climb_date = models.DateField()
+class ClimbEvent(models.Model):
     mountain = models.CharField(max_length=50)
-
-    def __str__(self):
-        return self.mountain
-
+    climb_date = models.DateField(null=True)
+    completed = models.BooleanField('summited', default=False)
+    user = models.ForeignKey(User, on_delete=models.PROTECT, related_name='climb_events', null = True)
     
+    def __str__(self):
+        summit_status = 'summited' if self.completed else 'attempted'
+        return f'{self.mountain}: {summit_status}'    
