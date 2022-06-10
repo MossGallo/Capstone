@@ -8,6 +8,7 @@ from .models import Mountain
 
 def all_events(request):
     event_list = ClimbEvent.objects.all()
+    
     return render(request, 'posts/event_list.html',
         {'event_list': event_list})
 

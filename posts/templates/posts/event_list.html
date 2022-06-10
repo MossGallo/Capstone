@@ -12,7 +12,7 @@
         <div class="card-body">
             <p class="card-text">
                 <li>Date: {{ event.event_date }}</li>
-                <li>Route: {{ event.route }}</li>
+                <li>Route: {{ event.mountain.route }}</li>
                 
                 <li>Climbers:<br/>
                     {% for climber in event.attendees.all %}
