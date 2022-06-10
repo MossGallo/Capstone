@@ -3,14 +3,22 @@ from django.contrib.auth.decorators import login_required
 
 from .models import ClimbEvent
 
+def all_events(request):
+    event_list = ClimbEvent.objects.all()
+    return render(request, 'posts/event_list.html',
+        {'event_list': event_list})
+
+
 def index(request):
     
     if request.method == 'POST':
         if not request.user.is_authenticated:
             return redirect('users:login')
         mountain = request.POST.get('mountain')
+        event_date = request.POST.get('event_date')
         ClimbEvent.objects.create(
-            mountain=mountain,
+            mountain = mountain,
+            event_date = event_date,
             user=request.user
         )
         return redirect('climbs:home')

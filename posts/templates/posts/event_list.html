@@ -1,0 +1,27 @@
+{% extends 'posts/base.html' %}
+
+
+{% block content %}
+
+<h1> Expedition List </h1>
+    {% for event in event_list %}
+    <div class="card">
+        <div class="card-header">
+            <strong>{{ event }}</strong>
+        </div>
+        <div class="card-body">
+          <p class="card-text">
+                <li>Date: {{ event.event_date }}</li>
+                
+                <li> Climbers:<br/>
+                    {% for climber in event.attendess.all %}
+                    {{ climber }}<br/>
+                    {% endfor %}
+                </li>
+            </p>
+        </div>
+      </div>
+      <br/>
+    {% endfor%}
+
+{% endblock %}
