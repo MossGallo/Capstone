@@ -25,56 +25,81 @@
 		<form action="{% url 'climbs:home' %}" method="POST">
 			{% csrf_token %}
 			
-			<h2>Post Expeditions</h2>
-			<hr>
-			<label for="mountain">Mountain:</label>
-			<input type="text" id="mountain" name="mountain">
-			<label for="climb_date">Date:</label>
-			<input type="date" id="climb_date" name="climb_date">
-			<input type="submit" value="Post">
-
+			<div class="card">
+			
+				<div class="card-header">
+					<strong>Post Expeditions</strong>
+				</div>
+				</br/>
+				
+				<div class"card-body">
+					<label for="mountain">Mountain:</label>
+					<select name="mountain" id="mountain">
+						{% for mt in mountains %}
+						<option value="{{mt.id}}">{{mt.name}}</option>
+						{% endfor %}
+					</select>
+					
+						
+					{% comment %} <input type="text" id="mountain" name="mountain"> {% endcomment %}
+					<label for="climb_date">Date:</label>
+					<input type="date" id="climb_date" name="event_date">
+					<input type="submit" value="Post">
+				</div>
+				<br/>
+			</div>
 		</form>
 
-		<h2>Posted</h2>
-		
-		<ul>
+		<br/>
 
-			{% for climb in climbs_incomplete %}
-			<li>
-				<span>{{ climb.mountain}} {{ climb.event_date }}</span>
-				
-				<a href="{% url 'climbs:delete' climb.id %}">
-					<button>Delete</button>				
-				</a>
+		<div class="card">
+			<div class="card-header">
+				<h2>Posted</h2>
+			</div>
 
-				<a href="{% url 'climbs:toggle_complete' climb.id %}">
-					<button>Complete</button>
-				</a>
-			</li>
-			{% endfor %}
+			<div class="card-body">
+				<ul>
+					{% for climb in climbs_incomplete %}
+					<li>
+						<span>{{ climb.mountain}} {{ climb.event_date }}</span>
+						
+						<a href="{% url 'climbs:delete' climb.id %}">
+							<button>Delete</button>				
+						</a>
 
-		</ul>
+						<a href="{% url 'climbs:toggle_complete' climb.id %}">
+							<button>Complete</button>
+						</a>
+					</li>
+					{% endfor %}
+				</ul>
+			</div>
+		</div>
 
-		<h2>Complete</h2>
+		<br/>
+		<div class="card">
+			<div class="card-header">
+				<h2>Complete</h2>
+			</div>
+			<div class="card-body">
+				<ul>
+					{% for climb in climbs_complete %}
+					<li>
+						<span>{{ climb.mountain}} {{ climb.event_date }}</span>
 
-		<ul>
-			
-			{% for climb in climbs_complete %}
-			<li>
-				<span>{{ climb.mountain}} {{ climb.event_date }}</span>
+						<a href="{% url 'climbs:delete' climb.id %}">
+							<button>Delete</button>				
+						</a>
 
-				<a href="{% url 'climbs:delete' climb.id %}">
-					<button>Delete</button>				
-				</a>
+						<a href="{% url 'climbs:toggle_complete' climb.id %}">
+							<button>Re-Post</button>
+						</a>
 
-				<a href="{% url 'climbs:toggle_complete' climb.id %}">
-					<button>Re-Post</button>
-				</a>
-
-			</li>
-			{% endfor %}
-
-		</ul>
+					</li>
+					{% endfor %}
+				</ul>
+			</div>
+		<div>
 
 	</body>
 	</html>

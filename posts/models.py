@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 class Mountain(models.Model):
     name = models.CharField(max_length=20)
-    approach = models.CharField(max_length=30)
+    route = models.CharField(max_length=30)
     latitude = models.FloatField(blank=True, null=True)
     longitude = models.FloatField(blank=True, null=True)
     state = models.CharField(max_length=5,blank=True)

@@ -10,18 +10,21 @@
             <strong>{{ event }}</strong>
         </div>
         <div class="card-body">
-          <p class="card-text">
+            <p class="card-text">
                 <li>Date: {{ event.event_date }}</li>
+                <li>Route: {{ event.route }}</li>
                 
-                <li> Climbers:<br/>
-                    {% for climber in event.attendess.all %}
-                    {{ climber }}<br/>
+                <li>Climbers:<br/>
+                    {% for climber in event.attendees.all %}
+                    <ul>{{ climber }}</ul>
                     {% endfor %}
                 </li>
             </p>
+            <input type="submit" value="Join">
+            <input type="submit" value="Drop">          
         </div>
-      </div>
-      <br/>
+    </div>
+    <br/>
     {% endfor%}
 
 {% endblock %}

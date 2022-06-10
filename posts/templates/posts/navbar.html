@@ -14,7 +14,9 @@
                     {% else %}
                     <a class="nav-link" href="{% url 'users:sign_up' %}">Sign Up</a>
                     <a class="nav-link" href="{% url 'users:login' %}">Log In</a>
-                    <a class="nav-link" href="{% url 'climbs:list-events' %}">Expeditions</a>
+                    <a class="nav-link" href="{% url 'climbs:list_events' %}">Expeditions</a>
+                    <a class="nav-link" href="#">Climbing Routes</a>
+                    <a class="nav-link" href="#">Climbers</a>
                 {% endif %}
 
             </div>
