@@ -1,14 +1,27 @@
-
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required
 import calendar
 from calendar import HTMLCalendar
 from .models import ClimbEvent
 from .models import Mountain
+from django.contrib.auth.models import User
+
+def all_routes(request):
+    # mountains = Mountain.objects.all()
+    route_list = Mountain.objects.all()
+    return render(request, 'posts/route_list.html',
+    {'route_list': route_list})
+
+
+
+
+def all_climbers(request):
+    climber_list = User.objects.all()
+    return render(request, 'posts/climber_list.html',
+    {'climber_list': climber_list})
 
 def all_events(request):
     event_list = ClimbEvent.objects.all()
-    
     return render(request, 'posts/event_list.html',
         {'event_list': event_list})
 
@@ -58,3 +71,12 @@ def delete(request,id):
     climb.delete()
     return redirect('climbs:home')
 
+@login_required
+def join(request, id):
+    return redirect('clims:list_events')
+    pass
+
+@login_required
+def drop(request, id):
+    return redirect('clims:list_events')
+    pass

@@ -2,7 +2,7 @@
 
 
 {% block content %}
-
+{% comment %} 
 	<!DOCTYPE html>
 	<html lang="en">
 	<head>
@@ -10,26 +10,32 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>Log In</title>
-	</head>
+	</head> {% endcomment %}
 	<body>
-		<h1>Log In</h1>
+		<div class="card">
+			<div class="card-header">
+				<strong>Log In</strong>
+			</div>
 		
-		<form action="{% url 'users:login' %}" method="POST">
-			{% csrf_token %}
-			
-		
-			<label for="username">Username:</label>
-			<input type="text" id="username" name="username">
-			
-			
-			
-			<label for="password">Password:</label>
-			<input type="password" id="password" name="password">
-			
-			<input type="submit" value="Log In">
-		
-			<p>{{ message }}</p>
-		</form>
+				<div class="card-body">
+
+					<div class="card-text">
+						<form action="{% url 'users:login' %}" method="POST">
+							{% csrf_token %}
+
+							<label for="username">Username:</label>
+							<input type="text" id="username" name="username">
+
+							<label for="password">Password:</label>
+							<input type="password" id="password" name="password">
+							
+							<input type="submit" value="Log In">
+						
+							<p>{{ message }}</p>
+						</form>
+					</div>
+				</div>
+		</div>
 		
 	</body>
 	</html>

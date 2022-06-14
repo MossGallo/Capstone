@@ -15,18 +15,10 @@ class Mountain(models.Model):
     def __str__(self):
         return self.name
 
-class ClimbUser(models.Model):
-    first_name = models.CharField(max_length=30)
-    last_name = models.CharField(max_length=30)
-    # email = models.EmailField()
-
-    def __str__(self):
-        return self.first_name + ' ' + self.last_name
-
 class ClimbEvent(models.Model):
     mountain = models.ForeignKey(Mountain, blank=True, null=True, on_delete=models.CASCADE)
     event_date = models.DateField(null=True)
-    attendees = models.ManyToManyField(ClimbUser, blank=True) 
+    attendees = models.ManyToManyField(User, blank=True) 
     user = models.ForeignKey(User, on_delete=models.PROTECT, related_name='climb_events', null = True)
     completed = models.BooleanField(default=False)
     # party_size =
@@ -39,3 +31,10 @@ class ClimbEvent(models.Model):
         # return f'{self.mountain}: {summit_status}'
 
 
+# class ClimbUser(models.Model):
+#     first_name = models.CharField(max_length=30)
+#     last_name = models.CharField(max_length=30)
+#     # email = models.EmailField()
+
+#     def __str__(self):
+#         return self.first_name + ' ' + self.last_name

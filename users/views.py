@@ -26,6 +26,8 @@ def signup(request):
     context = {}
 
     if request.method == 'POST':
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
         username = request.POST.get('username')
         password1 = request.POST.get('password1')
         password2 = request.POST.get('password2')
@@ -38,7 +40,7 @@ def signup(request):
         if message: # this will run if there are any characters in the message string
             message += 'Please try again.'
         else:
-            user = User.objects.create_user(username=username, password=password1)
+            user = User.objects.create_user(first_name=first_name, last_name=last_name, username=username, password=password1)
             login(request, user)
             return redirect('climbs:home')
         context = {'message': message}

@@ -1,0 +1,24 @@
+{% extends 'posts/base.html' %}
+
+
+{% block content %}
+
+
+    <div class="card">
+        
+        <div class="card-header">
+            <strong> Mo'Mountain's Climbers</strong>
+        </div>
+    
+        <div class="card-body">
+            <div class="card-text">
+                {% for climber  in climber_list%}
+                <ul>{{ climber.first_name }} {{ climber.last_name }} </ul>
+                {% endfor %}
+                
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}

@@ -3,28 +3,29 @@
 
 {% block content %}
 
-<h1> Expedition List </h1>
-    {% for event in event_list %}
-    <div class="card">
-        <div class="card-header">
-            <strong>{{ event }}</strong>
-        </div>
-        <div class="card-body">
-            <p class="card-text">
-                <li>Date: {{ event.event_date }}</li>
-                <li>Route: {{ event.mountain.route }}</li>
-                
-                <li>Climbers:<br/>
-                    {% for climber in event.attendees.all %}
-                    <ul>{{ climber }}</ul>
-                    {% endfor %}
-                </li>
-            </p>
-            <input type="submit" value="Join">
-            <input type="submit" value="Drop">          
-        </div>
-    </div>
-    <br/>
-    {% endfor%}
+    <h1> Expedition List </h1>
+        {% for event in event_list %}
+            <div class="card">
+                <div class="card-header">
+                    <strong>{{ event }}</strong>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">
+                        <li>Date: {{ event.event_date }}</li>
+                        <li>Route: {{ event.mountain.route }}</li>
+                        <li>Organizer: {{ event.user.first_name }} {{ event.user.last_name }}</li>
+                        
+                        <li>Climbers:<br/>
+                            {% for climber in event.attendees.all %}
+                            <ul>{{ climber }}</ul>
+                            {% endfor %}
+                        </li>
+                    </p>
+                    <input type="submit" value="Join">
+                    <input type="submit" value="Drop">          
+                </div>
+            </div>
+            <br/>
+        {% endfor%}
 
 {% endblock %}
