@@ -6,14 +6,12 @@ from .models import ClimbEvent
 from .models import Mountain
 from django.contrib.auth.models import User
 
+
 def all_routes(request):
     # mountains = Mountain.objects.all()
     route_list = Mountain.objects.all()
     return render(request, 'posts/route_list.html',
     {'route_list': route_list})
-
-
-
 
 def all_climbers(request):
     climber_list = User.objects.all()

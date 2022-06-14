@@ -2,20 +2,28 @@
 
 
 {% block content %}
+    <h1> Mountains & Peaks </h1>
+    {% for route in route_list %}
+        <div class="card">
+            <div class="card-header">
+                <strong>{{ route.name }}</strong>
+            </div>
 
-     <div class="card">
-        <div class="card-header">
-            <strong>Mountain Routes</strong>
-        </div>
+            <div class="card-body">
 
-        <div class="card-body">
+                <div class="card-text">
+                    
+                    <li>Coordinates: {{ route.latitude }}, {{ route.longitude }}</li>
+                    <li>State: {{ route.state }}</li>
+                    <li>Country: {{ route.country }}</li>
+                    <li>Continent:{{ route.continent }}</li>
+                    <li>Elevation:{{ route.elevation }}ft</li>
+                    <li>Glaciated: {{ route.glaciated }}</li>
+                    <li>Map link: {{ route.google_maps_url }}</li>
 
-            <div class="card-text">
-                {% for route in list_routes %}
-                {{ route.route }}
-                {% endfor %}
-            
+                </div>
             </div>
         </div>
-    </div>
+        <br/><br/>       
+    {% endfor %}
 {% endblock %}

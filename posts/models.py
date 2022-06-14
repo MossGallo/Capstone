@@ -3,13 +3,14 @@ from django.contrib.auth.models import User
 
 class Mountain(models.Model):
     name = models.CharField(max_length=20)
-    route = models.CharField(max_length=30)
+    route = models.CharField(max_length=30, null=True)
     latitude = models.FloatField(blank=True, null=True)
     longitude = models.FloatField(blank=True, null=True)
     state = models.CharField(max_length=5,blank=True)
     country = models.CharField(max_length=20,blank=True)
     continent = models.CharField(max_length=20,blank=True)
     elevation = models.CharField(max_length=10,blank=True)
+    glaciated = models.BooleanField(default=False)
     google_maps_url = models.URLField(blank=True)
 
     def __str__(self):
