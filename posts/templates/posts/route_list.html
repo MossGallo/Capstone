@@ -3,27 +3,60 @@
 
 {% block content %}
     <h1> Mountains & Peaks </h1>
-    {% for route in route_list %}
-        <div class="card">
-            <div class="card-header">
-                <strong>{{ route.name }}</strong>
-            </div>
-
-            <div class="card-body">
-
-                <div class="card-text">
+    {% comment %} DO SOME ACCORDION MAGIC!!! {% endcomment %}
+    {% comment %} {% for route in route_list %}
+        <div class="accordion" id="accordionExample">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        {{ route.name }}
+                    </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                     
-                    <li>Coordinates: {{ route.latitude }}, {{ route.longitude }}</li>
-                    <li>State: {{ route.state }}</li>
-                    <li>Country: {{ route.country }}</li>
-                    <li>Continent:{{ route.continent }}</li>
-                    <li>Elevation:{{ route.elevation }}ft</li>
-                    <li>Glaciated: {{ route.glaciated }}</li>
-                    <li>Map link: {{ route.google_maps_url }}</li>
+                    <div class="accordion-body">
+                    
+                        <li>Coordinates: {{ route.latitude }}, {{ route.longitude }}</li>
+                        <li>State: {{ route.state }}</li>
+                        <li>Country: {{ route.country }}</li>
+                        <li>Continent: {{ route.continent }}</li>
+                        <li>Elevation: {{ route.elevation }} ft</li>
+                        <li>Glaciated: {{ route.glaciated }}</li>
+                        <li><a href={{ route.google_maps_url }} target="_blank">Map</a></li>
+
+                    </div>
 
                 </div>
+
             </div>
         </div>
+        
         <br/><br/>       
-    {% endfor %}
+    {% endfor %} {% endcomment %}
+
+    {% for route in route_list %}
+        
+            <div class="card">
+                <div class="card-header bg-dark text-light">
+                    <strong>{{ route.name }}</strong>
+                </div>
+
+                <div class="card-body">
+                    
+                    <div class="card-text">
+                        
+                        <li>Coordinates: {{ route.latitude }}, {{ route.longitude }}</li>
+                        <li>State: {{ route.state }}</li>
+                        <li>Country: {{ route.country }}</li>
+                        <li>Continent: {{ route.continent }}</li>
+                        <li>Elevation: {{ route.elevation }} ft</li>
+                        <li>Glaciated: {{ route.glaciated }}</li>
+                        <li><a href={{ route.google_maps_url }} target="_blank">Map</a></li>
+
+                    </div>
+                </div>
+            </div>
+        
+        <br/><br/>       
+    {% endfor %} 
 {% endblock %}
