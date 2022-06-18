@@ -1,16 +1,46 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required
-import calendar
-from calendar import HTMLCalendar
 from .models import ClimbEvent
 from .models import Mountain
+from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
+from .forms import MountainForm
+import calendar
+from calendar import HTMLCalendar
 
+def show_mt(request, route_id):
+    route = Mountain.objects.get(pk=route_id)
+    return render(request,'posts/show_mt.html',
+        {'route': route})
+
+def add_mt(request):
+    submitted = False
+    if request.method == "POST":
+        form = MountainForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/add_mt?submitted=True')
+    else:
+        form = MountainForm
+        if 'submitted' in request.GET:
+            submitted = True
+    return render(request, 'posts/add_mt.html', {'form':form, 'submitted':submitted, })
 
 def all_routes(request):
+    import string
     route_list = Mountain.objects.all()
+    routes = []
+    for letter in string.ascii_uppercase:
+        letter_dict = {
+            'letter': letter,
+            'routes': route_list.filter(name__startswith=letter)
+        }
+        routes.append(letter_dict)
+    for route in routes:
+        print(route)
+        print()
     return render(request, 'posts/route_list.html',
-    {'route_list': route_list,})
+    {'route_list': route_list, 'routes':routes, })
 
 def all_climbers(request):
     climber_list = User.objects.all()

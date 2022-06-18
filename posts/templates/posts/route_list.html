@@ -3,38 +3,54 @@
 
 {% block content %}
     <h1> Mountains & Peaks </h1>
-    {% comment %} DO SOME ACCORDION MAGIC!!! {% endcomment %}
-    {% comment %} {% for route in route_list %}
-        <div class="accordion" id="accordionExample">
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="headingOne">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                        {{ route.name }}
-                    </button>
-                </h2>
-                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                    
-                    <div class="accordion-body">
-                    
-                        <li>Coordinates: {{ route.latitude }}, {{ route.longitude }}</li>
-                        <li>State: {{ route.state }}</li>
-                        <li>Country: {{ route.country }}</li>
-                        <li>Continent: {{ route.continent }}</li>
-                        <li>Elevation: {{ route.elevation }} ft</li>
-                        <li>Glaciated: {{ route.glaciated }}</li>
-                        <li><a href={{ route.google_maps_url }} target="_blank">Map</a></li>
 
-                    </div>
-
+    <div class="accordion" id="accordionExample">
+        {% for letter_dict in routes %}
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="heading-{{ letter.dict.letter }}">
+              <button class="accordion-button bg-dark text-light collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{ letter_dict.letter }}" aria-expanded="true" aria-controls="collapse-{{ letter_dict.letter }}">
+                {{ letter_dict.letter }}
+              </button>
+            </h2>
+            <div id="collapse-{{ letter_dict.letter }}" class="accordion-collapse collapse" aria-labelledby="heading-{{ letter_dict.letter }}" data-bs-parent="#accordionExample">
+              <div class="accordion-body">
+                  {% for route in letter_dict.routes %}
+                  <div class="card">
+                        <div class="card-header bg-dark text-light">
+                            <strong><a href="{% url 'climbs:show-mt' route.id %}">{{ route.name }}</a>
+                            </strong>
+                        </div>
+                        
+                        <div class="card-body">
+                            
+                            <div class="card-text">
+                                
+                                <li>Coordinates: {{ route.latitude }}, {{ route.longitude }}</li>
+                                <li>State: {{ route.state }}</li>
+                                <li>Country: {{ route.country }}</li>
+                                <li>Continent: {{ route.continent }}</li>
+                                <li>Elevation: {{ route.elevation }} ft</li>
+                                <li>Glaciated: {{ route.glaciated }}</li>
+                                <li><a href={{ route.google_maps_url }} target="_blank">Map</a></li>
+        
+                            </div>
+                        </div>
+                    
                 </div>
-
+            
+            <br/><br/>    
+        {% endfor %}
+              </div>
             </div>
         </div>
+        {% endfor %}
+    </div>
         
-        <br/><br/>       
-    {% endfor %} {% endcomment %}
 
-    {% for route in route_list %}
+    <br/><br/>
+
+
+    {% comment %} {% for route in route_list %}
         
             <div class="card">
                 <div class="card-header bg-dark text-light">
@@ -58,5 +74,5 @@
             </div>
         
         <br/><br/>       
-    {% endfor %} 
+    {% endfor %} {% endcomment %}
 {% endblock %}

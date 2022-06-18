@@ -1,0 +1,36 @@
+{% extends 'posts/base.html' %}
+
+
+{% block content %}
+
+<h1>Add Mountain To Database</h1>
+<br/><br/>
+<div class="card">
+    <div class="card-header bg-dark text-light">
+        <strong>Mountain Data</strong>
+    </div>
+
+    {% if submitted %}
+        Your Moutain Data Was Submitted Successfully
+
+    {% else %}
+
+        <div class="card-body">
+            
+            <form action="" method=POST>
+                {% csrf_token %}
+
+                {{ form.as_p }}
+
+                <input type="submit" value="Submit" class="btn btn-secondary">
+            </form>
+
+            <div class="card-text">
+            </div>
+        </div> 
+    {% endif %}  
+</div>
+
+<br/><br/>
+
+{% endblock %}
