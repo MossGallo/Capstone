@@ -25,7 +25,7 @@ class Command(BaseCommand):
                     name = row['Peak'],
                     latitude = no_value(row['Latitude']),
                     longitude = no_value(row['Longitude']),
-                    elevation = row['elevation'],
+                    elevation = row['Elevation Feet'],
                     state = row['State'],
                     country = row['Country'],
                     continent = row['Continent'],
