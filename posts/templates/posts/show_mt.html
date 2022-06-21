@@ -3,13 +3,28 @@
 
 {% block content %}
 
-<div class="card">
-    <div class="card-header bg-dark text-light">
+<div class="card bg-light">
+    <div class="card-header bg-dark text-light text-center">
         <strong>{{ route }}</strong>
     </div>
+    <br/>
+    <div class="content">
+        <canvas id="pfcanvas" width="800" height="500" oncontextmenu="event.preventDefault()"></canvas>
+      
+        <!-- you can also add an optional div that will be hidden when the PeakFinder modele has been loaded -->
+        <div id="pfcanvasprogress">
+          <div class="spinner" id="spinner">
+          </div>
+        </div>
+    </div>
+    <br/>
 
-    <div class="card-body">
-        <li>Coordinates: {{ route.latitude }}, {{ route.longitude }}</li>
+    <div id="map"></div>
+
+    <br/>
+
+    <div class="card-body bg-light">
+        <li>Coordinates: Lat: {{ route.latitude }}, Long: {{ route.longitude }}</li>
         <li>State: {{ route.state }}</li>
         <li>Country: {{ route.country }}</li>
         <li>Continent: {{ route.continent }}</li>

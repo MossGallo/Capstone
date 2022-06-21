@@ -2,35 +2,36 @@
 
 
 {% block content %}
+    <div class="card text-center bg-light text-dark">
+        <h1>Post Expeditions</h1>
+    </div>
+    <br/>
+    <div class="card">
+        <div class="card-header bg-dark text-light">
+            <strong>Expedition Information</strong>
+        </div>
 
-<h1>Post Expeditions</h1>
-<br/><br/>
-<div class="card">
-    <div class="card-header bg-dark text-light">
-        <strong>Expedition Information</strong>
+        {% if submitted %}
+        Your Expedition Was Submitted Successfully
+
+        {% else %}
+
+        <div class="card-body">
+            
+            <form action="" method=POST>
+                {% csrf_token %}
+
+                {{ form.as_p }}
+
+                <input type="submit" value="Submit" class="btn btn-secondary">
+            </form>
+
+            <div class="card-text">
+            </div>
+        </div> 
+    {% endif %}  
     </div>
 
-    {% if submitted %}
-    Your Expedition Was Submitted Successfully
-
-    {% else %}
-
-    <div class="card-body">
-        
-        <form action="" method=POST>
-            {% csrf_token %}
-
-            {{ form.as_p }}
-
-            <input type="submit" value="Submit" class="btn btn-secondary">
-        </form>
-
-        <div class="card-text">
-        </div>
-    </div> 
-{% endif %}  
-</div>
-
-<br/><br/>
+    <br/><br/>
 
 {% endblock %}

@@ -1,12 +1,20 @@
-if (PeakFinder.utils.caniuse()) {
+function commandscallback(cmd) {
+  console.log('command: '+ cmd)
+}
+
+window.onload = () => {
+  
+  if (PeakFinder.utils.caniuse()) {
 
     let panel = new PeakFinder.PanoramaPanel({
       canvasid: 'pfcanvas', 
       locale: 'en' // attach to canvas
-    }) 
+    })
+
+    panel.registerCommandsCallback(commandscallback)
     
     panel.init(function() {
-      // inside here its save to use the panel
+      console.log('ready')
       
       panel.settings.distanceUnit(1) // use imperial (miles, feet) format
               
@@ -18,3 +26,8 @@ if (PeakFinder.utils.caniuse()) {
       panel.fieldofview(45.0, 2.0)
     });
   }
+  else { // !caniuse
+  
+  }
+
+}
