@@ -1,0 +1,23 @@
+{% extends 'posts/base.html' %}
+
+
+{% block content %}
+
+    <h1>Update Expedition</h1>
+    <br/>
+    <form action="" method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <br/>
+        <input type="submit" value="Update"
+        class="btn btn-secondary">
+    </form>
+    <br/>
+
+
+
+
+
+
+
+{% endblock %}

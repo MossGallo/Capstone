@@ -3,78 +3,77 @@
 
 {% block content %}
 
-	{% comment %} <body> {% endcomment %}
 
-		<h1>Welcome,
-			{% if request.user.is_authenticated %}
-			{{ request.user.username }}
-			{% else %}
-			Guest
-			{% endif %}
-		</h1>
+	<h1>Welcome,
+		{% if request.user.is_authenticated %}
+		{{ request.user.username }}
+		{% else %}
+		Guest
+		{% endif %}
+	</h1>
 
-		<form action="{% url 'climbs:home' %}" method="POST">
-			{% csrf_token %}
-			
-			<div class="card">
-			
-				<div class="card-header bg-dark text-light">
-					<strong>Post Expeditions</strong>
-				</div>
-				</br/>
-				
-				<div class"card-body">
-					<label for="mountain">Mountain:</label>
-					<select name="mountain" id="mountain">
-						{% for mt in mountains %}
-						<option value="{{mt.id}}">{{mt.name}}</option>
-						{% endfor %}
-					</select>
-					
-						
-					{% comment %} <input type="text" id="mountain" name="mountain"> {% endcomment %}
-					<label for="climb_date">Date:</label>
-					<input type="date" id="climb_date" name="event_date">
-					<input type="submit" value="Post">
-				</div>
-				<br/>
-			</div>
-		</form>
-
-		<br/>
-
+	<form action="{% url 'climbs:home' %}" method="POST">
+		{% csrf_token %}
+		
 		<div class="card">
+		
 			<div class="card-header bg-dark text-light">
-				<strong>Posted</strong>
+				<strong>Post Expeditions</strong>
 			</div>
-
-			<div class="card-body">
-				<ul>
-					{% for climb in climbs_incomplete %}
-					<li>
-						<span>{{ climb.mountain}} {{ climb.event_date }}</span>
-						
-						<a href="{% url 'climbs:delete' climb.id %}">
-							<button>Delete</button>				
-						</a>
-
-						<a href="{% url 'climbs:toggle_complete' climb.id %}">
-							<button>Complete</button>
-						</a>
-					</li>
+			</br/>
+			
+			<div class"card-body">
+				<label for="mountain">Mountain:</label>
+				<select name="mountain" id="mountain">
+					{% for mt in mountains %}
+					<option value="{{mt.id}}">{{mt.name}}</option>
 					{% endfor %}
-				</ul>
+				</select>
+				
+					
+				{% comment %} <input type="text" id="mountain" name="mountain"> {% endcomment %}
+				<label for="climb_date">Date:</label>
+				<input type="date" id="climb_date" name="event_date">
+				<input type="submit" value="Post">
 			</div>
+			<br/>
+		</div>
+	</form>
+
+	<br/>
+
+	<div class="card">
+		<div class="card-header bg-dark text-light">
+			<strong>Posted</strong>
 		</div>
 
-		<br/>
-		<div class="card">
-			<div class="card-header bg-dark text-light">
-				<strong>Complete</strong>
-			</div>
-			<div class="card-body">
-				<ul>
-					{% for climb in climbs_complete %}
+		<div class="card-body">
+			<ul>
+				{% for climb in climbs_incomplete %}
+				<li>
+					<span>{{ climb.mountain}} {{ climb.event_date }}</span>
+					
+					<a href="{% url 'climbs:delete' climb.id %}">
+						<button>Delete</button>				
+					</a>
+
+					<a href="{% url 'climbs:toggle_complete' climb.id %}">
+						<button>Complete</button>
+					</a>
+				</li>
+				{% endfor %}
+			</ul>
+		</div>
+	</div>
+
+	<br/>
+	<div class="card">
+		<div class="card-header bg-dark text-light">
+			<strong>Complete</strong>
+		</div>
+		<div class="card-body">
+			<ul>
+				{% for climb in climbs_complete %}
 					<li>
 						<span>{{ climb.mountain}} {{ climb.event_date }}</span>
 
@@ -87,12 +86,9 @@
 						</a>
 
 					</li>
-					{% endfor %}
-				</ul>
-			</div>
-		<div>
-
-	{% comment %} </body>
-	 {% endcomment %}
+				{% endfor %}
+			</ul>
+		</div>
+	<div>
 
 {% endblock %}

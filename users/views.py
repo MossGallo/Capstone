@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
+from django.contrib import messages
+
 
 def login_user(request):
     context = {}
@@ -13,13 +15,16 @@ def login_user(request):
             login(request, user)
             return redirect('climbs:home')
         else:
-            context = {'message': 'Incorrect username or password.  Please try again.'}
-
-    return render(request, 'users/login.html', context)
+            messages.success(request, ('Incorrect username or password combination.  Please try again.'))
+            # context = {'message': 'Incorrect username or password combination.  Please try again.'}
+            return redirect('users:login')
+    else:
+        return render(request, 'users/login.html', context)
 
 def logout_user(request):
     
     logout(request)
+    messages.success(request, ('You Were Logged Out.'))
     return redirect('climbs:home')
 
 def signup(request):

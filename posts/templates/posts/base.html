@@ -24,25 +24,41 @@
         background-image: url('https://media.istockphoto.com/vectors/topographic-contour-lines-vector-map-seamless-pattern-vector-id626235232?k=20&m=626235232&s=612x612&w=0&h=4LFLtZSIAaLosinm4IBeFOawWaK-vGtS7-95-FIJwfk=');
 
       }
-
     
     </style>
-
+    
   </head>
   <body>
 
     {% include 'posts/navbar.html' %}
     <br/>
     <div class='container'>
-        {% block content %}
-        {% endblock %}
+      {% if messages %}
+          {% for message in messages %}
+            <br/>
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+              <strong>{{ message }}</strong>
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+          {% endfor %}
+      {% endif %}	
+      
+      {% block content %}
+      {% endblock %}
     </div>
+    <br/>
 
+    <div class='mtns'>
+
+    </di>
+    
     <footer class="text-center bg-dark text-light center">
-      <h5>&copy;2022 - MO'MOUNTAINS</h5>
+      <h5>&copy;2022 - MO'MOUNTÂINS</h5>
     </footer>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+    {% comment %} <script async type="text/javascript" src="https://www.peakfinder.org/script/peakfinder.1.0.min.js"></script>
+    <script src="js/peak_finder.js"></script> {% endcomment %}
   </body>
 </html>
     

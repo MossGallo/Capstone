@@ -21,3 +21,8 @@ urlpatterns = [
     path('',include('posts.urls')),
     path('users/', include('users.urls')),
 ]
+
+admin.site.site_header = "MO'MOUNTAINS ADMIN PAGE"
+admin.site.site_title = "MO'MOUNTAINS"
+admin.site.index_title = "ADMIN CONTROL PANEL"
+

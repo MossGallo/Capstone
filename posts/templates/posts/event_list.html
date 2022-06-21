@@ -12,17 +12,23 @@
                 <div class="card-body">
                     <p class="card-text">
                         <li>Date: {{ event.event_date }}</li>
-                        <li>Route: {{ event.mountain.route }}</li>
                         <li>Organizer: {{ event.user.first_name }} {{ event.user.last_name }}</li>
-                        
                         <li>Climbers:<br/>
                             {% for climber in event.attendees.all %}
                             <ul>{{ climber }}</ul>
                             {% endfor %}
                         </li>
+                        <li>Notes: {{ event.description }}</li>
+                        
+                        {% comment %} <li>Route: {{ event.mountain.route }}</li> {% endcomment %}
                     </p>
-                    <input type="submit" value="Join">
-                    <input type="submit" value="Drop">          
+                    <div class="card-footer">
+                        <a class="btn btn-outline-primary" href="{% url 'climbs:update-event' event.id  %}">Update</a>
+                        <a class="btn btn-outline-danger" href="{% url 'climbs:delete-event' event.id  %}">Delete</a>
+                        <a class="btn btn-outline-success" href="#">Join</a>
+                        <a class="btn btn-outline-secondary" href="#">Drop</a>  
+                    
+                    </div>       
                 </div>
             </div>
             <br/><br/><br/>

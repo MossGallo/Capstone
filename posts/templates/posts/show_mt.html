@@ -9,7 +9,13 @@
     </div>
 
     <div class="card-body">
-        
+        <li>Coordinates: {{ route.latitude }}, {{ route.longitude }}</li>
+        <li>State: {{ route.state }}</li>
+        <li>Country: {{ route.country }}</li>
+        <li>Continent: {{ route.continent }}</li>
+        <li>Elevation: {{ route.elevation }} ft</li>
+        <li>Glaciated: {{ route.glaciated }}</li>
+        <li><a href={{ route.google_maps_url }} target="_blank">Map</a></li>
         <div class="card-text">
         </div>
     </div>
