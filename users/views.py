@@ -22,7 +22,6 @@ def login_user(request):
         return render(request, 'users/login.html', context)
 
 def logout_user(request):
-    
     logout(request)
     messages.success(request, ('You Were Logged Out.'))
     return redirect('climbs:home')

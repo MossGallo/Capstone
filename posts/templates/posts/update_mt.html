@@ -5,12 +5,23 @@
 
     <h1>Update Mountain</h1>
     <br/>
-    <form action="" method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <br/>
-        <input type="submit" value="Update"
-        class="btn btn-secondary">
+    <div class="card">
+        <div class="card-header bg-dark text-light">
+            <strong>{{ route }}</strong>
+        </div>
+    
+        <div class="card-body">
+            <form action="" method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <br/>
+                <input type="submit" value="Update"
+                class="btn btn-secondary">
+            </form>
+            
+        </div>
+    </div>
+   
 
 
 
