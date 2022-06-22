@@ -3,35 +3,43 @@
 
 {% block content %}
 
-<div class="card text-center bg-light text-dark">
-    <h1>Add Mountain To Database</h1>
-</div>
-<br/>
-<div class="card">
-    <div class="card-header bg-dark text-light">
-        <strong>Mountain Data</strong>
-    </div>
+    {% if request.user.is_authenticated %}
+        <div class="card text-center border-dark bg-light text-dark">
+            <h1>Add Mountain To Database</h1>
+        </div>
+        <br/>
+        <div class="card border-dark">
+            <div class="card-header bg-dark text-light">
+                <strong>Mountain Data</strong>
+            </div>
 
-    {% if submitted %}
-        Your Moutain Data Was Submitted Successfully
+            {% if submitted %}
+                Your Moutain Data Was Submitted Successfully
+
+            {% else %}
+
+                <div class="card-body">
+                    
+                    <form action="" method=POST>
+                        {% csrf_token %}
+
+                        {{ form.as_p }}
+
+                        <input type="submit" value="Submit" class="btn btn-secondary">
+                    </form>
+
+                    <div class="card-text">
+                    </div>
+                </div> 
+            {% endif %}  
+        </div>
 
     {% else %}
+        <h1> Log in to View this Page.</h1>
+        <a href="{% url 'users:login' %}">Login Here</a>
 
-        <div class="card-body">
-            
-            <form action="" method=POST>
-                {% csrf_token %}
-
-                {{ form.as_p }}
-
-                <input type="submit" value="Submit" class="btn btn-secondary">
-            </form>
-
-            <div class="card-text">
-            </div>
-        </div> 
-    {% endif %}  
-</div>
+    {% endif %}
+    
 
 <br/><br/>
 

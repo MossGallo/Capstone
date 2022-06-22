@@ -1,0 +1,43 @@
+{% extends 'posts/base.html' %}
+
+
+{% block content %}
+    {% if form.errors %}
+         <div class="alert alert-warning alert-dismissible fade show border-dark shadow-lg" role="alert">
+            <strong>Form Error, Try again...</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endif %}
+
+    <div class="card">
+        <div class="card-header bg-dark text-light text-center">
+            <strong>REGISTER</strong>
+        </div>
+            <div class="card-body">
+
+                <div class="card-text">
+                    <form action="{% url 'users:register' %}" method="POST">
+                        {% csrf_token %}
+
+                        {{ form.as_p }}
+
+                        {% comment %} <label for="username">Username:</label>
+                        <input type="text" id="username" name="username">
+
+                        <label for="password">Password:</label>
+                        <input type="password" id="password" name="password"> {% endcomment %}
+                        <br/><br/>
+                        <input  type="submit" value="Submit" class="btn btn-secondary">
+                    
+                        {% comment %} <p>{{ message }}</p> {% endcomment %}
+                    </form>
+                </div>
+            </div>
+    </div>
+    <br/><br/>
+
+	
+		
+	
+	
+{% endblock %}

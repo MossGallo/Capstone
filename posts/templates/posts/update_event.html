@@ -3,16 +3,39 @@
 
 {% block content %}
 
-    <h1>Update Expedition</h1>
-    <br/>
-    <form action="" method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <br/>
-        <input type="submit" value="Update"
-        class="btn btn-secondary">
-    </form>
-    <br/>
+    {% if request.user.is_authenticated %}
+        {% if user == event.user %}
+            <div class="card">
+                <div class="card-header bg-dark text-light text-center">
+                    <h2>Update Expedition</h2>
+                </div>
+                <div class="card-body">
+                    
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <br/>
+                        <input type="submit" value="Update"
+                        class="btn btn-secondary">
+                    </form>
+                </div>
+            </div>
+            <br/>
+        
+        {% else %}
+            <h2>Update Denied</h2>
+            <p>Only the expedition's Organizer may update.</p>
+            Logged In User: {{ user }}
+            <br/>
+            Organizer: {{ event.user }}
+        {% endif %}
+
+    {% else %}
+    <h1> Log in to View this Page.</h1>
+    <a href="{% url 'users:login' %}">Login Here</a>
+
+    {% endif %}
+
 
 
 
