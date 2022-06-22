@@ -4,14 +4,22 @@
 {% block content %}
 
 {% if searched %}
-    <h1> You Searched for "{{ searched }}"</h1>
+<div class="card">
+    <div class="card-header text-center bg-dark text-light">
+        <h1> You Searched for "{{ searched }}"</h1>
+    </div>
     <br/>
-    {% for mountain in mountains %}
-        <a href="{% url 'climbs:show-mt' mountain.id %}">{{ mountain }}</a><br/>
-    {% endfor %}
-{% else %}
-    <h1>You Did Not Search For A Mountain</h1>
-{% endif %}
+    <div class="card-body">
+            {% for mountain in mountains %}
+                <ul>
+                    <li><a href="{% url 'climbs:show-mt' mountain.id %}">{{ mountain }}</a></li><br/>
+                </ul>
+            {% endfor %}
+        {% else %}
+            <h1>You Did Not Search For A Mountain</h1>
+        {% endif %}
+    </div>
+</div>
 
 
 

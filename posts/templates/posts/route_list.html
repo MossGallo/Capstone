@@ -2,11 +2,11 @@
 
 
 {% block content %}
-<div class="card text-center bg-light text-dark">
+<div class="card text-center border-dark bg-light text-dark">
     <h1> Mountains & Peaks </h1>
 </div>
 <br/>
-    <div class="accordion" id="accordionExample">
+    <div class="accordion border-dark" id="accordionExample">
         {% for letter_dict in routes %}
         <div class="accordion-item">
             <h2 class="accordion-header" id="heading-{{ letter.dict.letter }}">
@@ -15,9 +15,9 @@
               </button>
             </h2>
             <div id="collapse-{{ letter_dict.letter }}" class="accordion-collapse collapse" aria-labelledby="heading-{{ letter_dict.letter }}" data-bs-parent="#accordionExample">
-              <div class="accordion-body">
+              <div class="accordion-body border-dark">
                   {% for route in letter_dict.routes %}
-                  <div class="card">
+                  <div class="card border-dark">
                         <div class="card-header bg-dark text-light">
                             <strong><a class="link-light" href="{% url 'climbs:show-mt' route.id %}">{{ route.name }}</a>
                             </strong>
