@@ -4,16 +4,30 @@ from .models import ClimbEvent
 from .models import Mountain
 from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
-from .forms import MountainForm, ClimbEventForm
+from django.contrib import messages
+from .forms import MountainForm, ClimbEventForm, ClimbEventFormAdmin
 import calendar
 from calendar import HTMLCalendar
 
-
+def my_events(request):
+    if request.user.is_authenticated:
+        me = request.user.id
+        events = ClimbEvent.objects.filter(attendees=me)
+        return render(request, 'posts/my_events.html',
+        {'me':me, 'events':events})
+    else:
+        messages.success(request, ("You Do Not Have Permission To View This Page"))
+        return redirect('climbs:list_events')
 
 def delete_event(request,event_id):
     event = ClimbEvent.objects.get(pk=event_id)
-    event.delete()
-    return redirect('climbs:list_events')
+    if request.user == event.user:
+        event.delete()
+        messages.success(request, ("Expedition Deleted"))
+        return redirect('climbs:list_events')
+    else:
+        messages.success(request, ("Delete Permission Not Granted"))
+        return redirect('climbs:list_events')
 
 def update_event(request, event_id):
     event = ClimbEvent.objects.get(pk=event_id)
@@ -27,12 +41,25 @@ def update_event(request, event_id):
 def add_event(request):
     submitted = False
     if request.method == "POST":
-        form = ClimbEventForm(request.POST)
-        if form.is_valid():
-            form.save()
+        if request.user.is_superuser:
+            form = ClimbEventFormAdmin(request.POST)
+            if form.is_valid():
+                form.save()
+            return HttpResponseRedirect('/add_event?submitted=True')
+        else:
+            form = ClimbEventForm(request.POST)
+            if form.is_valid():
+                event = form.save(commit=False)
+                event.user = request.user # LOGGED IN USER
+                event.save()
             return HttpResponseRedirect('/add_event?submitted=True')
     else:
-        form = ClimbEventForm
+        # JUST GOING TO THE PAGE, NOT SUBMITTING
+        if request.user.is_superuser:
+            form = ClimbEventFormAdmin
+        else:
+            form = ClimbEventForm
+        
         if 'submitted' in request.GET:
             submitted = True
     return render(request, 'posts/add_event.html', {'form':form, 'submitted':submitted,})

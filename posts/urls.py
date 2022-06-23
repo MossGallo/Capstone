@@ -9,6 +9,7 @@ urlpatterns = [
     path('routes', views.all_routes, name='list_routes'),
     path('add_mt', views.add_mt, name='add-mt'),
     path('add_event', views.add_event, name='add-event'),
+    path('my_events', views.my_events, name='my-events'),
     path('search_mt', views.search_mt, name='search-mt'),
     path('update_mt/<route_id>', views.update_mt, name='update-mt'),
     path('update_event/<event_id>', views.update_event, name='update-event'),
