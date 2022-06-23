@@ -12,7 +12,7 @@
 		{% endif %}
 	</h1>
 
-	<form action="{% url 'climbs:home' %}" method="POST">
+	{% comment %} <form action="{% url 'climbs:home' %}" method="POST">
 		{% csrf_token %}
 		
 		<div class="card">
@@ -31,7 +31,7 @@
 				</select>
 				
 					
-				{% comment %} <input type="text" id="mountain" name="mountain"> {% endcomment %}
+				
 				<label for="climb_date">Date:</label>
 				<input type="date" id="climb_date" name="event_date">
 				<input type="submit" value="Post">
@@ -89,6 +89,6 @@
 				{% endfor %}
 			</ul>
 		</div>
-	<div>
+	<div> {% endcomment %}
 
 {% endblock %}

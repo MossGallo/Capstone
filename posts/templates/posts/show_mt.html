@@ -4,36 +4,97 @@
 {% block content %}
 
 <div class="card border-dark bg-light">
-    <div class="card-header bg-dark text-light text-center">
-        <strong>{{ route }}</strong>
-    </div>
-    <br/>
-    <div class="content">
-        <canvas id="pfcanvas" width="800" height="500" oncontextmenu="event.preventDefault()"></canvas>
-      
-        <!-- you can also add an optional div that will be hidden when the PeakFinder modele has been loaded -->
-        <div id="pfcanvasprogress">
-          <div class="spinner" id="spinner">
-          </div>
+  <div class="card-header bg-dark text-light text-center">
+      <strong>{{ route }}</strong>
+  </div>
+  <br/>
+  <div class="content">
+      <canvas id="pfcanvas" width="800" height="500" oncontextmenu="event.preventDefault()"></canvas>
+    
+      {% comment %} <!-- you can also add an optional div that will be hidden when the PeakFinder modele has been loaded -->
+      <div id="pfcanvasprogress">
+        <div class="spinner" id="spinner">
         </div>
+      </div> {% endcomment %}
+  </div>
+  <br/>
+
+  <div id="map"></div>
+
+  <br/>
+
+  <div class=" d-flex align-items-center card-body border-top bg-light">
+    <div class="mtn-data">
+      <li>Coordinates: Lat: {{ route.latitude }}, Long: {{ route.longitude }}</li>
+      <li>State: {{ route.state }}</li>
+      <li>Country: {{ route.country }}</li>
+      <li>Continent: {{ route.continent }}</li>
+      <li>Elevation: {{ route.elevation }} ft</li>
+      <li>Glaciated: {{ route.glaciated }}</li>
+      <li><a href={{ route.google_maps_url }} target="_blank">Map</a></li>
     </div>
-    <br/>
-
-    <div id="map"></div>
-
-    <br/>
-
-    <div class="card-body bg-light">
-        <li>Coordinates: Lat: {{ route.latitude }}, Long: {{ route.longitude }}</li>
-        <li>State: {{ route.state }}</li>
-        <li>Country: {{ route.country }}</li>
-        <li>Continent: {{ route.continent }}</li>
-        <li>Elevation: {{ route.elevation }} ft</li>
-        <li>Glaciated: {{ route.glaciated }}</li>
-        <li><a href={{ route.google_maps_url }} target="_blank">Map</a></li>
-        <div class="card-text">
-        </div>
+    <div class="d-flex" style="height:200px;">
+      <div class="vr dark px-spacer.25 mx-5"></div>
     </div>
+    <div id='mtn-weather' class="mtn-weather">
+      <img src="http://openweathermap.org/img/w/{{ route_weather.current.weather.0.icon }}.png" alt="Image" style="width:150%">
+      <figure class="figure">
+      </figure>
+      <p> {{ route_weather.current.temp }} °F </p>
+      <p> {{ route_weather.current.weather.0.description}} </p>
+    </div>
+  </div>
 </div>
+
+<script type="text/javascript">
+    function commandscallback(cmd) {
+      console.log('command: '+ cmd)
+    }
+    
+    window.onload = () => {
+       // alert("running")
+      
+      if (PeakFinder.utils.caniuse()) {
+    
+        let panel = new PeakFinder.PanoramaPanel({
+          canvasid: 'pfcanvas', 
+          locale: 'en',
+          //bgcolor: '#34D8EB',
+          // attach to canvas
+
+        })
+    
+        panel.registerCommandsCallback(commandscallback)
+        
+        panel.init(function() {
+          console.log('ready')
+          
+          panel.settings.distanceUnit(1) // use imperial (miles, feet) format
+                  
+          panel.loadViewpoint({{ route.latitude }}, {{ route.longitude }}, "{{ route }}") // loads a viewpoint
+      
+          // animate to view
+          panel.azimut(350.0, 2.0)
+          panel.altitude(1.0, 1.0)
+          panel.fieldofview(45.0, 2.0)
+        });
+      }
+      else { // !caniuse
+      }
+    }
+</script>
+<script>
+      
+    var map = L.map('map').setView([{{ route.latitude }}, {{ route.longitude }}], 13.5);
+    
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '© OpenStreetMap'
+    }).addTo(map);
+    
+</script>
+
+
 
 {% endblock %}

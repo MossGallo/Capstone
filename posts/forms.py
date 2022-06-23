@@ -32,6 +32,8 @@ class MountainForm(ModelForm):
             'google_maps_url': forms.URLInput(attrs={'class':'form-control', 'placeholder':'Google Maps Link'}),
             'glaciated': forms.TextInput(attrs={'class':'form-control', 'placeholder':'Glaciated?'}),
         }
+        # 'glaciated': forms.CheckboxInput(attrs={'class':'form-check', 'placeholder':'Glaciated?'}),
+
 
 #---Admin SuperUser Event Form---#
 class ClimbEventFormAdmin(ModelForm):

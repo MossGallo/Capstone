@@ -6,8 +6,15 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.contrib import messages
 from .forms import MountainForm, ClimbEventForm, ClimbEventFormAdmin
+from datetime import datetime
+from django.conf import settings
 import calendar
 from calendar import HTMLCalendar
+import requests
+import json
+import urllib.request
+
+
 
 def my_events(request):
     if request.user.is_authenticated:
@@ -90,8 +97,19 @@ def search_mt(request):
     
 def show_mt(request, route_id):
     route = Mountain.objects.get(pk=route_id)
+
+    params = {
+    'lat': route.latitude,
+    'lon': route.longitude,
+    'appid': settings.API_KEY,
+    'exclude': 'minutely,hourly,daily,alerts',
+    'units': 'imperial'
+    }
+    response = requests.get('https://api.openweathermap.org/data/2.5/onecall', params=params)
+    route_weather = response.json()
+    # print(route_weather)
     return render(request,'posts/show_mt.html',
-        {'route': route})
+        {'route': route, 'route_weather':route_weather})
 
 def add_mt(request):
     submitted = False
@@ -129,7 +147,8 @@ def all_events(request):
     return render(request, 'posts/event_list.html',
         {'event_list': event_list})
 
-def index(request):
+
+def home(request):
     if request.method == 'POST':
         if not request.user.is_authenticated:
             return redirect('users:login')
@@ -144,7 +163,7 @@ def index(request):
         )
         return redirect('climbs:home')
     context = {}
-    
+        
     if request.user.is_authenticated:
         climbs = request.user.climb_events.all()
         mountains = Mountain.objects.all()
@@ -153,7 +172,9 @@ def index(request):
             'climbs_incomplete': climbs.filter(completed=False),
             'mountains': mountains
         }
-    return render(request, 'posts/index.html', context)
+    return render(request, 'posts/home.html', context)
+
+
 
 @login_required
 def toggle_complete(request, id):
@@ -184,3 +205,34 @@ def join(request, id):
 def drop(request, id):
     return redirect('clims:list_events')
     pass
+
+
+
+
+    # def home(request, year=datetime.now().year, month=datetime.now().strftime('%B')):
+    #     month = month.capitalize()
+    #     month_number = list(calendar.month_name).index(month)
+    #     month_number = int(month_number)
+
+    #     cal = HTMLCalendar().formatmonth(
+    #         year, 
+    #         month_number)
+    #     now = datetime.now()
+    #     current_year = now.year
+        
+        
+    #     event_list = ClimbEvent.objects.filter(
+    #         event_date__year = year,
+    #         event_date__month = month_number
+    #         )
+
+    #     time = now.strftime('%I:%M %p')
+    #     return render(request, 'posts/home.html', 
+    #         {"year": year,
+    #         "month": month,
+    #         "month_number": month_number,
+    #         "cal": cal,
+    #         "current_year": current_year,
+    #         "time":time,
+    #         "event_list": event_list,
+    #         })

@@ -3,7 +3,7 @@ from .import views
 
 app_name = 'climbs'
 urlpatterns = [
-    path('', views.index, name = 'home'),
+    path('', views.home, name='home'),
     path('events', views.all_events, name='list_events'),
     path('climbers', views.all_climbers, name='list_climbers'),
     path('routes', views.all_routes, name='list_routes'),
