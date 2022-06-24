@@ -3,92 +3,58 @@
 
 {% block content %}
 
+	<center>
+		<h1>Hello 
+			{% if request.user.is_authenticated %}
+			{{ request.user.username }}! Events For {{ month }} {{ year }}
+			{% else %}
+			Please Log In, or Sign Up To Register
+			{% endif %}
+		</h1>
 
-	<h1>Welcome,
-		{% if request.user.is_authenticated %}
-		{{ request.user.username }}
-		{% else %}
-		Guest
-		{% endif %}
-	</h1>
+		As of {{ time }}
+		<br/><br/>
+		{{ cal|safe }}
+		<br/><br/>
+	</center>
 
-	{% comment %} <form action="{% url 'climbs:home' %}" method="POST">
-		{% csrf_token %}
-		
-		<div class="card">
-		
-			<div class="card-header bg-dark text-light">
-				<strong>Post Expeditions</strong>
+	<h3>Events This Month...</h3>
+
+	{% if event_list %}
+		{% for event in event_list %}
+			<div class="card border-dark">
+				<div class="card-header bg-dark text-light">
+					<strong>{{ event }}</strong>
+				</div>
+				<div class="card-body">
+					<p class="card-text">
+						<li>Date: {{ event.event_date }}</li>
+						<li>Organizer: {{ event.user.first_name }} {{ event.user.last_name }}</li>
+						<li>Climbers:<br/>
+							{% for climber in event.attendees.all %}
+							<ul>{{ climber }}</ul>
+							{% endfor %}
+						</li>
+						<li>Notes: {{ event.description }}</li>
+					</p>
+					{% if request.user.is_authenticated %}
+						{% if user == event.user %}
+							<div class="card-footer text muted">
+								<a class="btn btn-outline-primary" href="{% url 'climbs:update-event' event.id  %}">Update</a>
+								<a class="btn btn-outline-danger" href="{% url 'climbs:delete-event' event.id  %}">Delete</a> 
+							</div>
+						{% endif %}
+					{% endif %}  
+				</div>
 			</div>
-			</br/>
-			
-			<div class"card-body">
-				<label for="mountain">Mountain:</label>
-				<select name="mountain" id="mountain">
-					{% for mt in mountains %}
-					<option value="{{mt.id}}">{{mt.name}}</option>
-					{% endfor %}
-				</select>
-				
-					
-				
-				<label for="climb_date">Date:</label>
-				<input type="date" id="climb_date" name="event_date">
-				<input type="submit" value="Post">
-			</div>
-			<br/>
-		</div>
-	</form>
+			<br/><br/><br/>
+		{% endfor %}
+	{% else %}
+	Sorry...There are no events this month...
+	{% endif %}
 
-	<br/>
-
-	<div class="card">
-		<div class="card-header bg-dark text-light">
-			<strong>Posted</strong>
-		</div>
-
-		<div class="card-body">
-			<ul>
-				{% for climb in climbs_incomplete %}
-				<li>
-					<span>{{ climb.mountain}} {{ climb.event_date }}</span>
-					
-					<a href="{% url 'climbs:delete' climb.id %}">
-						<button>Delete</button>				
-					</a>
-
-					<a href="{% url 'climbs:toggle_complete' climb.id %}">
-						<button>Complete</button>
-					</a>
-				</li>
-				{% endfor %}
-			</ul>
-		</div>
-	</div>
-
-	<br/>
-	<div class="card">
-		<div class="card-header bg-dark text-light">
-			<strong>Complete</strong>
-		</div>
-		<div class="card-body">
-			<ul>
-				{% for climb in climbs_complete %}
-					<li>
-						<span>{{ climb.mountain}} {{ climb.event_date }}</span>
-
-						<a href="{% url 'climbs:delete' climb.id %}">
-							<button>Delete</button>				
-						</a>
-
-						<a href="{% url 'climbs:toggle_complete' climb.id %}">
-							<button>Re-Post</button>
-						</a>
-
-					</li>
-				{% endfor %}
-			</ul>
-		</div>
-	<div> {% endcomment %}
-
+	<center>
+		<br/><br/><br/>
+		{{ current_year }}
+	</center>
 {% endblock %}

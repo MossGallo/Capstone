@@ -11,10 +11,16 @@ from django.conf import settings
 import calendar
 from calendar import HTMLCalendar
 import requests
-import json
-import urllib.request
 
-
+def search_events(request):
+    if request.method == "POST":
+        searched = request.POST['searched']
+        events = ClimbEvent.objects.filter(description__contains=searched)
+        return render(request,'posts/search_events.html',
+            {'searched': searched, 'events': events})
+    else:
+        return render(request,'posts/search_events.html',
+        { })
 
 def my_events(request):
     if request.user.is_authenticated:
@@ -148,33 +154,32 @@ def all_events(request):
         {'event_list': event_list})
 
 
-def home(request):
-    if request.method == 'POST':
-        if not request.user.is_authenticated:
-            return redirect('users:login')
-        print(request.POST)
-        mountain = request.POST.get('mountain')
-        event_date = request.POST.get('event_date')
-        
-        ClimbEvent.objects.create(
-            mountain_id = mountain,
-            event_date = event_date,
-            user=request.user
-        )
-        return redirect('climbs:home')
-    context = {}
-        
-    if request.user.is_authenticated:
-        climbs = request.user.climb_events.all()
-        mountains = Mountain.objects.all()
-        context = {
-            'climbs_complete': climbs.filter(completed=True),
-            'climbs_incomplete': climbs.filter(completed=False),
-            'mountains': mountains
-        }
-    return render(request, 'posts/home.html', context)
+def home(request, year=datetime.now().year, month=datetime.now().strftime('%B')):
+    month = month.capitalize()
+    month_number = list(calendar.month_name).index(month)
+    month_number = int(month_number)
 
+    cal = HTMLCalendar().formatmonth(
+        year, 
+        month_number)
+    now = datetime.now()
+    current_year = now.year
+    
+    
+    event_list = ClimbEvent.objects.filter(
+        event_date__year = year,
+        event_date__month = month_number )
 
+    time = now.strftime('%I:%M %p')
+    return render(request, 'posts/home.html', 
+        {"year": year,
+        "month": month,
+        "month_number": month_number,
+        "cal": cal,
+        "current_year": current_year,
+        "time":time,
+        "event_list": event_list,
+        })
 
 @login_required
 def toggle_complete(request, id):
@@ -205,34 +210,3 @@ def join(request, id):
 def drop(request, id):
     return redirect('clims:list_events')
     pass
-
-
-
-
-    # def home(request, year=datetime.now().year, month=datetime.now().strftime('%B')):
-    #     month = month.capitalize()
-    #     month_number = list(calendar.month_name).index(month)
-    #     month_number = int(month_number)
-
-    #     cal = HTMLCalendar().formatmonth(
-    #         year, 
-    #         month_number)
-    #     now = datetime.now()
-    #     current_year = now.year
-        
-        
-    #     event_list = ClimbEvent.objects.filter(
-    #         event_date__year = year,
-    #         event_date__month = month_number
-    #         )
-
-    #     time = now.strftime('%I:%M %p')
-    #     return render(request, 'posts/home.html', 
-    #         {"year": year,
-    #         "month": month,
-    #         "month_number": month_number,
-    #         "cal": cal,
-    #         "current_year": current_year,
-    #         "time":time,
-    #         "event_list": event_list,
-    #         })

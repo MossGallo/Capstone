@@ -16,6 +16,7 @@
                 <li><a class="dropdown-item" href="{% url 'climbs:list_events' %}">Posted</a></li>
                 <li><a class="dropdown-item" href="{% url 'climbs:add-event' %}">Add Events</a></li>
                 <li><a class="dropdown-item" href="{% url 'climbs:my-events' %}">My Events</a></li>
+                <li><a class="dropdown-item" href="{% url 'climbs:search-events' %}">Search</a></li>
               </ul>
             </li>
             <li class="nav-item dropdown">
@@ -28,7 +29,6 @@
               </ul>
             </li>
             <a class="nav-link" href="{% url 'climbs:list_climbers' %}">Climbers</a>
-            <a class="nav-link" href="#">Calendar</a>
             <a class="nav-link" href="{% url 'users:logout' %}">Log Out</a>
           {% else %}
             {% comment %} <a class="nav-link" href="{% url 'users:sign_up' %}">Sign Up</a> {% endcomment %}

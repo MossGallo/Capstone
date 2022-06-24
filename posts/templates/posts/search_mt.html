@@ -3,23 +3,29 @@
 
 {% block content %}
 
-{% if searched %}
-<div class="card">
-    <div class="card-header text-center bg-dark text-light">
-        <h1> You Searched for "{{ searched }}"</h1>
-    </div>
-    <br/>
-    <div class="card-body">
-            {% for mountain in mountains %}
-                <ul>
-                    <li><a href="{% url 'climbs:show-mt' mountain.id %}">{{ mountain }}</a></li><br/>
-                </ul>
-            {% endfor %}
-        {% else %}
-            <h1>You Did Not Search For A Mountain</h1>
-        {% endif %}
-    </div>
-</div>
+    {% if searched %}
+        <div class="card border-dark">
+            <div class="card-header text-center bg-dark text-light">
+                <h1> You searched for "{{ searched }}"</h1>
+            </div>
+            <br/>
+            <div class="card-body">
+                {% for mountain in mountains %}
+                    <ul>
+                        <li><a href="{% url 'climbs:show-mt' mountain.id %}">{{ mountain }}</a></li><br/>
+                    </ul>
+                {% endfor %}
+            </div>
+        </div>
+
+    {% else %}
+        <div class="alert alert-warning alert-dismissible fade show border-dark shadow-lg" role="alert">
+            <strong>No input provided, try again...</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+    {% endif %}
+            
+   
 
 
 
