@@ -30,13 +30,13 @@
                             <div class="card-footer">
                                 <a class="btn btn-outline-primary" href="{% url 'climbs:update-event' event.id  %}">Update</a>
                                 <a class="btn btn-outline-danger" href="{% url 'climbs:delete-event' event.id  %}">Delete</a>
-                                <a class="btn btn-outline-success" href="#">Join</a>
-                                <a class="btn btn-outline-secondary" href="#">Drop</a> 
+                                <a class="btn btn-outline-success" href="{% url 'climbs:join-event' event.id %}">Join</a>
+                                <a class="btn btn-outline-secondary" href="{% url 'climbs:drop-event' event.id %}">Drop</a> 
                             </div>    
                         {% else %}
                             <div class="card-footer">
-                                <a class="btn btn-outline-success" href="#">Join</a>
-                                <a class="btn btn-outline-secondary" href="#">Drop</a>  
+                                <a class="btn btn-outline-success" href="{% url 'climbs:join-event' event.id %}">Join</a>
+                                <a class="btn btn-outline-secondary" href="{% url 'climbs:drop-event' event.id %}">Drop</a>  
                             </div>
                         {% endif %}
                     {% endif %}  

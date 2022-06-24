@@ -9,22 +9,14 @@
   </div>
   <br/>
   <div class="content">
-      <canvas id="pfcanvas" width="800" height="500" oncontextmenu="event.preventDefault()"></canvas>
-    
-      {% comment %} <!-- you can also add an optional div that will be hidden when the PeakFinder modele has been loaded -->
-      <div id="pfcanvasprogress">
-        <div class="spinner" id="spinner">
-        </div>
-      </div> {% endcomment %}
+    <canvas id="pfcanvas" width="1000" height="700" oncontextmenu="event.preventDefault()"></canvas>
   </div>
   <br/>
-
   <div id="map"></div>
-
   <br/>
-
   <div class=" d-flex align-items-center card-body border-top bg-light">
     <div class="mtn-data">
+      
       <li>Coordinates: Lat: {{ route.latitude }}, Long: {{ route.longitude }}</li>
       <li>State: {{ route.state }}</li>
       <li>Country: {{ route.country }}</li>
@@ -33,19 +25,23 @@
       <li>Glaciated: {{ route.glaciated }}</li>
       <li><a href={{ route.google_maps_url }} target="_blank">Map</a></li>
     </div>
-    <div class="d-flex" style="height:200px;">
+    <div class="d-flex" style="height:300px;">
       <div class="vr dark px-spacer.25 mx-5"></div>
     </div>
-    <div id='mtn-weather' class="mtn-weather">
-      <img src="http://openweathermap.org/img/w/{{ route_weather.current.weather.0.icon }}.png" alt="Image" style="width:150%">
-      <figure class="figure">
-      </figure>
-      <p> {{ route_weather.current.temp }} °F </p>
-      <p> {{ route_weather.current.weather.0.description}} </p>
+    <div class="mtn-weather">
+        <div class="text-center">
+          <p>Current Weather<p>
+          <div class="center">
+            <img src="http://openweathermap.org/img/w/{{ route_weather.current.weather.0.icon }}.png" alt="Image" style="width:150%">
+          </div>
+          <p> {{ route_weather.current.temp }} °F </p>
+          <p> {{ route_weather.current.weather.0.description}} </p>
+        </div>
+      
     </div>
   </div>
 </div>
-
+{% comment %} PEAK-FINDER API {% endcomment %}
 <script type="text/javascript">
     function commandscallback(cmd) {
       console.log('command: '+ cmd)
@@ -83,9 +79,9 @@
       }
     }
 </script>
+{% comment %} LEAFLET-MAP API {% endcomment %}
 <script>
-      
-    var map = L.map('map').setView([{{ route.latitude }}, {{ route.longitude }}], 13.5);
+  var map = L.map('map').setView([{{ route.latitude }}, {{ route.longitude }}], 13.5);
     
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {

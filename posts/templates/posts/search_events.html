@@ -2,21 +2,32 @@
 
 
 {% block content %}
-    {% if searched %}
+
+       
         <div class="card">
             <div class="card-header text-center bg-dark text-light">
-                <h1> You Searched for "{{ searched }}"</h1>
+                    <h1> Expeditions Index</h1>
+                {% if searched %} 
+                    <h1> You Searched for "{{ searched }}"</h1>
+                {% elif no_search != True %}
+                        <div class="alert alert-warning alert-dismissible fade show border-dark shadow-lg" role="alert">
+                            <strong>No search provided, try again...</strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                {% endif %}
+                
             </div>
             <br/>
             <div class="card-body">
                 <form method=POST action="{% url 'climbs:search-events' %}">
                     {% csrf_token %}
-                    <input class="form-control me-2" type="search" placeholder="Expeditions...." aria-label="Search" name="searched">
+                    <input class="form-control me-2" type="search" placeholder="Event Date (YYYY-MM-DD)" aria-label="Search" name="searched">
                     <br/>
                     <button class="btn btn-outline-secondary" type="submit">Search</button>
                 </form>   
             </div>
         </div>
+ 
         <br/><br/><br/>
         {% for event in events %}
             <div class="card border-dark">
@@ -41,13 +52,13 @@
                             <div class="card-footer">
                                 <a class="btn btn-outline-primary" href="{% url 'climbs:update-event' event.id  %}">Update</a>
                                 <a class="btn btn-outline-danger" href="{% url 'climbs:delete-event' event.id  %}">Delete</a>
-                                <a class="btn btn-outline-success" href="#">Join</a>
-                                <a class="btn btn-outline-secondary" href="#">Drop</a> 
+                                <a class="btn btn-outline-success" href="{% url 'climbs:join-event' event.id %}">Join</a>
+                                <a class="btn btn-outline-secondary" href="{% url 'climbs:drop-event' event.id %}">Drop</a> 
                             </div>    
                         {% else %}
                             <div class="card-footer">
-                                <a class="btn btn-outline-success" href="#">Join</a>
-                                <a class="btn btn-outline-secondary" href="#">Drop</a>  
+                                <a class="btn btn-outline-success" href="{% url 'climbs:join-event' event.id %}">Join</a>
+                                <a class="btn btn-outline-secondary" href="{% url 'climbs:drop-event' event.id %}">Drop</a>  
                             </div>
                         {% endif %}
                     {% endif %}  
@@ -55,10 +66,6 @@
             </div>
             <br/><br/><br/>
         {% endfor %}
-    {% else %}
-        <div class="alert alert-warning alert-dismissible fade show border-dark shadow-lg" role="alert">
-            <strong>No input provided, try again...</strong>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    {% endif %}
+
+
 {% endblock %}

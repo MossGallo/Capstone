@@ -19,7 +19,7 @@ class Mountain(models.Model):
 class ClimbEvent(models.Model):
     mountain = models.ForeignKey(Mountain, blank=True, null=True, on_delete=models.CASCADE)
     event_date = models.DateField(null=True)
-    attendees = models.ManyToManyField(User, blank=True) 
+    attendees = models.ManyToManyField(User, blank=True, related_name= 'attending_events') 
     user = models.ForeignKey(User, on_delete=models.PROTECT, related_name='climb_events', null = True)
     description = models.TextField(blank=True)
     completed = models.BooleanField(default=False)

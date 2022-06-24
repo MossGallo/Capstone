@@ -4,20 +4,24 @@
 {% block content %}
 
 	<center>
-		<h1>Hello 
-			{% if request.user.is_authenticated %}
-			{{ request.user.username }}! Events For {{ month }} {{ year }}
-			{% else %}
-			Please Log In, or Sign Up To Register
-			{% endif %}
-		</h1>
+		<div class="card border-dark">
+			<h1>Hello 
+				{% if request.user.is_authenticated %}
+				{{ request.user.username }}! Events For {{ month }} {{ year }}
+				{% else %}
+				Please Log In, or Sign Up To Register
+				{% endif %}
+			</h1>
+		</div>
 
-		As of {{ time }}
+		{% comment %} As of {{ time }} {% endcomment %}
 		<br/><br/>
-		{{ cal|safe }}
+		
+			{{ cal|safe }}
+		
 		<br/><br/>
-	</center>
-
+	
+		<hr>
 	<h3>Events This Month...</h3>
 
 	{% if event_list %}
@@ -50,11 +54,7 @@
 			<br/><br/><br/>
 		{% endfor %}
 	{% else %}
-	Sorry...There are no events this month...
+		No events this month...
 	{% endif %}
 
-	<center>
-		<br/><br/><br/>
-		{{ current_year }}
-	</center>
 {% endblock %}

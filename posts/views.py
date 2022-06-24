@@ -15,17 +15,17 @@ import requests
 def search_events(request):
     if request.method == "POST":
         searched = request.POST['searched']
-        events = ClimbEvent.objects.filter(description__contains=searched)
+        events = ClimbEvent.objects.filter(event_date__contains=searched)
         return render(request,'posts/search_events.html',
             {'searched': searched, 'events': events})
     else:
         return render(request,'posts/search_events.html',
-        { })
+        { 'no_search': True })
 
 def my_events(request):
     if request.user.is_authenticated:
         me = request.user.id
-        events = ClimbEvent.objects.filter(attendees=me)
+        events = request.user.attending_events.all()
         return render(request, 'posts/my_events.html',
         {'me':me, 'events':events})
     else:
@@ -57,7 +57,8 @@ def add_event(request):
         if request.user.is_superuser:
             form = ClimbEventFormAdmin(request.POST)
             if form.is_valid():
-                form.save()
+                event = form.save()
+                event.attendees.add(event.user)
             return HttpResponseRedirect('/add_event?submitted=True')
         else:
             form = ClimbEventForm(request.POST)
@@ -65,6 +66,7 @@ def add_event(request):
                 event = form.save(commit=False)
                 event.user = request.user # LOGGED IN USER
                 event.save()
+                event.attendees.add(request.user)
             return HttpResponseRedirect('/add_event?submitted=True')
     else:
         # JUST GOING TO THE PAGE, NOT SUBMITTING
@@ -103,7 +105,7 @@ def search_mt(request):
     
 def show_mt(request, route_id):
     route = Mountain.objects.get(pk=route_id)
-
+    # OPEN-WEATHER API #
     params = {
     'lat': route.latitude,
     'lon': route.longitude,
@@ -182,31 +184,14 @@ def home(request, year=datetime.now().year, month=datetime.now().strftime('%B'))
         })
 
 @login_required
-def toggle_complete(request, id):
-    climb = get_object_or_404(ClimbEvent, id = id)
-
-    if climb.user != request.user:
-        return redirect('climbs:home')
+def join_event(request, event_id):
+    event = get_object_or_404(ClimbEvent, id=event_id)
+    event.attendees.add(request.user)
+    return redirect('climbs:list_events')
     
-    climb.completed = not climb.completed
-    climb.save()
-    return redirect('climbs:home')
-
 @login_required
-def delete(request,id):
-    climb = get_object_or_404(ClimbEvent, id=id)
-
-    if climb.user != request.user:
-        return redirect('climbs:home')
-    climb.delete()
-    return redirect('climbs:home')
-
-@login_required
-def join(request, id):
-    return redirect('clims:list_events')
-    pass
-
-@login_required
-def drop(request, id):
-    return redirect('clims:list_events')
-    pass
+def drop_event(request, event_id):
+    event = get_object_or_404(ClimbEvent, id=event_id)
+    event.attendees.remove(request.user)
+    return redirect('climbs:list_events')
+   

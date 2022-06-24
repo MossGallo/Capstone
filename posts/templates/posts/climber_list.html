@@ -11,11 +11,14 @@
         </div>
     
         <div class="card-body">
-            <div class="card-text">
-                {% for climber  in climber_list%}
-                <ul>{{ climber.first_name }} {{ climber.last_name }} </ul>
-                {% endfor %}
-                
+            <div class="table table-striped">
+                <tbody>
+                    <tr>
+                        {% for climber  in climber_list%}
+                        <ul>{{ climber.first_name }} {{ climber.last_name }} </ul>
+                        {% endfor %}
+                    </tr>
+                </tbody>
             </div>
         </div>
 

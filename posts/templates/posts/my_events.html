@@ -8,19 +8,35 @@
         <h1>My Expeditions</h1>
     </div>
     <br/>
-    <div class="card border-dark">
-        <div class="card-header bg-dark text-light">
-            <strong>Expeditions</strong>
+    {% for event in events %}
+        <div class="card border-dark">
+            <div class="card-header bg-dark text-light">
+                <strong>{{event}}</strong>
+            </div>
+            <div class="card-body">
+                <p class="card-text">
+                    <li>Date: {{ event.event_date }}</li>
+                    <li>Organizer: {{ event.user.first_name }} {{ event.user.last_name }}</li>
+                    <li>Climbers:<br/>
+                        {% for climber in event.attendees.all %}
+                        <ul>{{ climber }}</ul>
+                        {% endfor %}
+                    </li>
+                    <li>Notes: {{ event.description }}</li>  
+                </p>
+                {% if request.user.is_authenticated %}
+                    {% if user == event.user %}
+                        <div class="card-footer">
+                            <a class="btn btn-outline-primary" href="{% url 'climbs:update-event' event.id  %}">Update</a>
+                            <a class="btn btn-outline-danger" href="{% url 'climbs:delete-event' event.id  %}">Delete</a>
+                            <a class="btn btn-outline-success" href="{% url 'climbs:join-event' event.id %}">Join</a>
+                            <a class="btn btn-outline-secondary" href="{% url 'climbs:drop-event' event.id %}">Drop</a> 
+                        </div>
+                    {% endif %}
+                {% endif %} 
+            </div>    
         </div>
-        <div class="card-body">
-            {% for event in events %}
-                {{ event }}
-                <br/>
-            {% endfor %}
-        </div>
-        
-    </div>
-    
-    
+        <br/>
+    {% endfor %}
     
 {% endblock %}

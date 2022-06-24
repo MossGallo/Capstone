@@ -17,8 +17,8 @@ urlpatterns = [
     path('show_mt/<route_id>', views.show_mt, name='show-mt'),
     path('delete_event/<event_id>', views.delete_event, name='delete-event'),
     path('delete_mt/<route_id>', views.delete_mt, name='delete-mt'),
-    path('toggle-complete/<int:id>/', views.toggle_complete, name ='toggle_complete'),
-    path('delete/<int:id>/', views.delete, name = 'delete'),
+    path('join_event/<event_id>/', views.join_event, name='join-event'),
+    path('drop_event/<event_id>/', views.drop_event, name='drop-event'),
 
 ]
 

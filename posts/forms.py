@@ -19,7 +19,7 @@ class MountainForm(ModelForm):
             'continent': '',
             'elevation': '',
             'google_maps_url': '',
-            'glaciated': '',
+            'glaciated': 'Glaciated?',
         }
         widgets = {
             'name': forms.TextInput(attrs={'class':'form-control', 'placeholder':'Mountain/Peak Name'}),
